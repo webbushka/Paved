@@ -1,0 +1,58 @@
+.banner {
+	height: 18em;
+	text-align: center;
+}
+
+.banner p {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	font-weight: bold;
+	font-size: 2.2em;
+	margin-left: 2.2em;
+	margin-right: 2.2em;
+}
+
+.explanation {
+	height: 14em;
+	text-align: center;
+}
+
+.explanation h2 {
+	position: absolute;
+	font-size: 1.6em;
+	margin-top: 1em;
+	margin-left: 50%;
+	transform: translateX(-50%);
+}
+
+.explanation p {
+	position: relative;
+	font-size: 1.2em;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-left: 4.6em;
+	margin-right: 4.6em;
+}
+
+.highlighted-companies {
+	height: 10em;
+	background-color: rgb(72,145,115);
+	opacity: .8;
+}
+
+.get-paved-container {
+	height: 10em;
+	text-align: center;
+}
+
+.get-paved-container button {
+	height: 2.8em;
+	width: 8em;
+	font-size: 1.6em;
+	background-color: rgb(72,145,115);
+	color: white;
+	border: 0;
+	border-radius: .2em;
+	font-family: 'Cantarell', sans-serif;
+}

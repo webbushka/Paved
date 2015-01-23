@@ -1,0 +1,39 @@
+.form-header {
+	height: 4em;
+	width: 20em;
+	background-color: rgb(73,108,137);
+}
+
+.form-body {
+	height: 10em;
+	width: 20em;
+	text-align: center;
+	background-color: rgb(242,242,242);
+}
+
+.first-row {
+	display: inline-block;
+}
+
+.second-row {
+	display: inline-block;
+}
+
+.third-row {
+	display: inline-block;
+}
+
+#last {
+	width: 3.4em;
+}
+
+button {
+	height: 3em;
+	width: 8em;
+	margin-top: 2em;
+	background-color: rgb(72,145,115);
+	border: 0;
+	border-radius: .2em;
+	color: white;
+	font-family: 'Cantarell', sans-serif;
+}

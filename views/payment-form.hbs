@@ -1,0 +1,52 @@
+<div class="form-header">
+</div>
+<div class="form-body">
+<form action="" method="POST" id="payment-form">
+  <span class="payment-errors"></span>
+
+  <div class="first-row">
+    <label>
+      <input type="text" name="first-name" placeholder="First Name">
+    </label>
+  </div>
+
+  <div class="first-row">
+    <label>
+      <input type="text" name="last-name" placeholder="Last Name"/>
+    </label>
+  </div>
+
+  <div class="second-row">
+    <label>
+      <input type="text" name="email" placeholder="Email">
+    </label>
+  </div>
+
+  <div class="second-row">
+    <label>
+      <input type="text" name="email" placeholder="Confirm Email">
+    </label>
+  </div>
+
+  <div class="third-row">
+    <label>
+      <input type="text" size="20" data-stripe="number" placeholder="Card Number">
+    </label>
+  </div>
+
+  <div class="third-row">
+    <label>
+      <input type="text" size="4" data-stripe="cvc" placeholder="CVC">
+    </label>
+  </div>
+
+  <div class="third-row">
+    <label>
+      <input type="text" size="2" data-stripe="exp-month" placeholder="MM">
+    </label>
+    <input type="text" size="4" data-stripe="exp-year" placeholder="YYYY" id="last">
+  </div>
+
+  <button type="submit">Get Paved</button>
+</form>
+</div>
