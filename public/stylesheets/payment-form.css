@@ -1,7 +1,14 @@
+.form {
+	margin-left: 50%;
+	transform: translateX(-50%);
+	width: 20em;
+}
+
 .form-header {
 	height: 4em;
 	width: 20em;
 	background-color: rgb(73,108,137);
+	margin-top: 5em;
 }
 
 .form-body {
@@ -9,6 +16,7 @@
 	width: 20em;
 	text-align: center;
 	background-color: rgb(242,242,242);
+	margin-bottom: 15em;
 }
 
 .first-row {
