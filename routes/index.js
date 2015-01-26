@@ -1,11 +1,13 @@
+var emails = require('../emails');
 var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
 router
 	.get('/', function(req, res) {
-  	res.render('landing-page');
-	});
+  	res.render('landing-page.hbs', {layout: false});
+	})
+	.post('/', emails.create);
 
 
 /*

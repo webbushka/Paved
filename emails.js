@@ -4,7 +4,7 @@ var emailSchema = mongoose.Schema({
 	email: String
 })
 
-var email = mongoose.model('Email', emailSchema);
+var Email = mongoose.model('Email', emailSchema);
 
 exports.create = function(req, res){
   if (!req.param('email')) {
@@ -15,7 +15,7 @@ exports.create = function(req, res){
     console.log(email);
     email.save(function (err, item) {
       if (err) return console.error(err);
-      res.send("adding " + email);
+      res.render('landing-page', {layout: false, success: true});
     });
   }
 };
