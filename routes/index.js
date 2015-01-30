@@ -33,5 +33,7 @@ router
       failureRedirect : '/sign-up', // redirect back to the signup page if there is an error
       failureFlash : true // allow flash messages
   }));
+
+  console.log('here');
 	
 module.exports = router;

@@ -12,7 +12,7 @@ var mongoose = require('mongoose');
 
 //landing-page mongoose reqs
 //var mongo = require('mongodb');
-//var db = mongoose.connection;
+var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

@@ -1,19 +1,19 @@
 .form {
 	margin-left: 50%;
 	transform: translateX(-50%);
-	width: 20em;
+	width: 24em;
 }
 
 .form-header {
 	height: 4em;
-	width: 20em;
+	width: 24em;
 	background-color: rgb(73,108,137);
 	margin-top: 5em;
 }
 
 .form-body {
-	height: 10em;
-	width: 20em;
+	height: 12em;
+	width: 24em;
 	text-align: center;
 	background-color: rgb(242,242,242);
 	margin-bottom: 15em;
@@ -21,6 +21,7 @@
 
 .first-row {
 	display: inline-block;
+	margin-top: 1em;
 }
 
 .second-row {
@@ -32,7 +33,7 @@
 }
 
 #last {
-	width: 3.4em;
+	width: 3.9em;
 }
 
 button {
