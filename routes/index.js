@@ -32,6 +32,15 @@ router
       successRedirect : '/', // redirect to the secure profile section
       failureRedirect : '/sign-up', // redirect back to the signup page if there is an error
       failureFlash : true // allow flash messages
+  }))
+	// process the login form
+	.get('/log-in', function(req, res) {
+		res.render('log-in', {layout: false});
+	})
+  .post('/log-in', passport.authenticate('local-login', {
+      successRedirect : '/', // redirect to the secure profile section
+      failureRedirect : '/log-in', // redirect back to the signup page if there is an error
+      failureFlash : true // allow flash messages
   }));
 
   console.log('here');
