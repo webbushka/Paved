@@ -17,6 +17,7 @@ require('./config/passport')(passport);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var opportunities = require('./routes/opportunities');
 
 var app = express();
 
@@ -40,7 +41,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-mongoose.connect('mongodb://localhost/sign-up');
+mongoose.connect('mongodb://localhost/opportunities');
 db.on('error', function callback () {
     console.error('connection error');
 });
@@ -50,6 +51,7 @@ db.once('open', function callback () {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/opportunities', opportunities);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

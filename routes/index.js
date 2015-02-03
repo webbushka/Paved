@@ -8,7 +8,7 @@ var router = express.Router();
 router
 	/*
 	.get('/', function(req, res) {
-  	res.render('landing-page.hbs', {layout: false});
+  	res.render('landing-page.hbs', { layout: false });
 	})
 	.post('/', emails.create);
 	*/
@@ -24,8 +24,14 @@ router
 	.get('/payment-form', function(req, res) {
 		res.render('payment-form', { stylesheet: 'payment-form' });
 	})
+	.get('/admin', function(req, res) {
+		res.render('admin', { stylesheet: 'admin' });
+	})
+	.post('/admin', function(req, res) {
+		res.render('opportunities', { stylesheet: 'opportunities' });
+	})
 	.get('/sign-up', function(req, res) {
-		res.render('sign-up', {layout: false});
+		res.render('sign-up', { layout: false });
 	})
 	// process the signup form
   .post('/sign-up', passport.authenticate('local-signup', {
