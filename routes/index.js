@@ -31,7 +31,7 @@ router
 	.post('/admin', opportunities.create);
 	}
 	.get('/sign-up', function(req, res) {
-		res.render('sign-up', { layout: false });
+		res.render('sign-up', {layout: false});
 	})
 	// process the signup form
   .post('/sign-up', passport.authenticate('local-signup', {
