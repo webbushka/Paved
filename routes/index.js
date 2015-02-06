@@ -1,7 +1,7 @@
 //var emails = require('../emails');
 var express = require('express');
 var passport = require('passport');
-var opportunities = require('../routes/opportunities');
+var opportunities = require('./opportunities');
 var router = express.Router();
 
 /* GET home page. */
@@ -28,8 +28,7 @@ router
 	.get('/admin', function(req, res) {
 		res.render('admin', { stylesheet: 'admin' });
 	})
-	.post('/admin', opportunities.create);
-	}
+	.post('/admin', opportunities.create)
 	.get('/sign-up', function(req, res) {
 		res.render('sign-up', {layout: false});
 	})

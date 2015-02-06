@@ -16,8 +16,6 @@ var db = mongoose.connection;
 require('./config/passport')(passport);
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
-var opportunities = require('./routes/opportunities');
 
 var app = express();
 
@@ -50,8 +48,6 @@ db.once('open', function callback () {
 });
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/opportunities', opportunities);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
