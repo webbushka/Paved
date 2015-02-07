@@ -5,7 +5,6 @@ var mongoose = require('mongoose');
 
 // define the schema for our opportunity model
 var opportunitySchema = mongoose.Schema({
-
 		title					: String,  
   	status		 		: String,
   	requirements  : String,
@@ -17,16 +16,15 @@ var Opportunity = mongoose.model('Opportunity', opportunitySchema);
 
 exports.create = function(req, res){
   var opportunity = new Opportunity({ 
-  	title					: req.params('title'),
-		status		 		: req.params('status'),
-		requirements  : req.params('requiremements'),
-		timeestimate	: req.params('timeestimate'),
-		price					: req.params('price')
+  	title					: req.param('title'),
+		status		 		: req.param('status'),
+		requirements  : req.param('requiremements'),
+		timeestimate	: req.param('timeestimate'),
+		price					: req.param('price')
   });
   	console.log(opportunity);
   	opportunity.save(function (err, item) {
     	if (err) return console.error(err);
-    	res.render('opportunities', {stylesheet: opportunities});
-  	});
-	});
+    	res.render('opportunities', {stylesheet: 'opportunities'});
+  });
 };
