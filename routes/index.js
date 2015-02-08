@@ -17,7 +17,7 @@ router
 		res.render('index', { stylesheet: 'index' });
 	})
 	.get('/opportunities', function(req, res) {
-		res.render('opportunities', { stylesheet: 'opportunities' });
+		res.render('opportunities', { stylesheet: 'opportunities', opportunities: opportunities.find() });
 	})
 	.get('/focused', function(req, res) {
 		res.render('focused', { stylesheet: 'focused' });

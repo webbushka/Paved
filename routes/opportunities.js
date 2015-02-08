@@ -15,7 +15,7 @@ var opportunitySchema = mongoose.Schema({
 var Opportunity = mongoose.model('Opportunity', opportunitySchema);
 
 exports.create = function(req, res){
-  var opportunity = new Opportunity({ 
+  var opportunity = new Opportunity({
   	title					: req.param('title'),
 		status		 		: req.param('status'),
 		requirements  : req.param('requiremements'),
@@ -27,4 +27,8 @@ exports.create = function(req, res){
     	if (err) return console.error(err);
     	res.render('opportunities', {stylesheet: 'opportunities'});
   });
+};
+
+exports.findAll = function(req, res){
+	return Opportunity.find();
 };

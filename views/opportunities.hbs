@@ -30,17 +30,30 @@ No HR departments to block your path, no silly job descriptions and requirements
 		</tbody>
 	</table>
 </div>
+{{#each opportunities}}
 <div class="company-container">
-	<h3>NOODLE
+	<h3>{{title}}
 	</h3>
-	<div class="opportunities-list">
-		<ul>
-			<li class="opportunities">Email Manager</li>
-			<li class="opportunities">Copywriter</li>
-			<li class="opportunities">Front-end Developer</li>
-		</ul>
-	</div>
+	<table class="opportunities-table">
+		<tbody>
+			<tr> 
+				<td class="opportunities name">
+					<a href="/focused">{{title}}</a>
+				</td>
+				<td class="opportunities timeframe">{{status}}</td>
+			</tr>
+			<tr>
+				<td class="opportunities name">{{title}}</td>
+				<td class="opportunities timeframe">{{status}}</td>
+			</tr>
+			<tr>
+				<td class="opportunities name">{{title}}</td>
+				<td class="opportunities timeframe">{{status}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
+{{/each}}
 <div class="company-container">
 	<h3>THINKFUL
 	</h3>
