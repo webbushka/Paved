@@ -29,6 +29,11 @@ exports.create = function(req, res){
   });
 };
 
-exports.findAll = function(req, res){
-	return Opportunity.find();
+exports.find = function(req, res) {
+	return Opportunity.find(function (err, opps) {
+		console.log(opps);
+		console.log("made it");
+		if (err) return console.log(err);
+		return opps;
+	});
 };
