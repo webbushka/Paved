@@ -1,7 +1,7 @@
 //var emails = require('../emails');
 var express = require('express');
 var passport = require('passport');
-var opportunities = require('./opportunities');
+var companies = require('./opportunities');
 var router = express.Router();
 
 /* GET home page. */
@@ -16,7 +16,7 @@ router
 	.get('/', function(req, res) {
 		res.render('index', { stylesheet: 'index' });
 	})
-	.get('/opportunities', opportunities.find)
+	.get('/opportunities', companies.find)
 	.get('/focused', function(req, res) {
 		res.render('focused', { stylesheet: 'focused' });
 	})
@@ -26,7 +26,7 @@ router
 	.get('/admin', isLoggedIn, function(req, res) {
 		res.render('admin', { stylesheet: 'admin' });
 	})
-	.post('/admin', opportunities.create)
+	.post('/admin', companies.create)
 	.get('/sign-up', function(req, res) {
 		res.render('sign-up', {layout: false});
 	})
