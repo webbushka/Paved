@@ -1,3 +1,8 @@
+.hideIfNotNew {display: none}
+
+.new-company .hideIfNotNew { display: block; }
+
+/*
 .form {
 	margin-left: 50%;
 	transform: translateX(-50%);

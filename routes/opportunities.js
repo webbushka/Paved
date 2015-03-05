@@ -1,6 +1,4 @@
 var express = require('express');
-var router = express.Router();
-
 var mongoose = require('mongoose');
 
 // define the schema for our opportunity model
@@ -21,12 +19,12 @@ var Company = mongoose.model('Company', companySchema);
 
 exports.create = function(req, res){
   var company = new Company({
-  	name					: req.param('name'),
-  	position			: req.param('position'),
-		status		 		: req.param('status'),
-		requirements  : req.param('requirements'),
-		timeestimate	: req.param('timeestimate'),
-		price					: req.param('price')
+  	name					: req.body.company('name'),
+  	position			: req.body.company('position'),
+		status		 		: req.body.company('status'),
+		requirements  : req.body.company('requirements'),
+		timeestimate	: req.body.company('timeestimate'),
+		price					: req.body.company('price')
   });
   	console.log(company);
   	company.save(function (err, item) {
