@@ -18,13 +18,14 @@ var companySchema = mongoose.Schema({
 var Company = mongoose.model('Company', companySchema);
 
 exports.create = function(req, res){
+	console.log(req.body);
   var company = new Company({
-  	name					: req.body.company('name'),
-  	position			: req.body.company('position'),
-		status		 		: req.body.company('status'),
-		requirements  : req.body.company('requirements'),
-		timeestimate	: req.body.company('timeestimate'),
-		price					: req.body.company('price')
+  	name					: req.body.name,
+  	position			: req.body.position,
+		status		 		: req.body.status,
+		requirements  : req.body.requirements,
+		timeestimate	: req.body.timeestimate,
+		price					: req.body.price
   });
   	console.log(company);
   	company.save(function (err, item) {

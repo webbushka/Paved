@@ -27,6 +27,20 @@ router
 		res.render('admin', { stylesheet: 'admin' });
 	})
 	.post('/admin', companies.create)
+	.put('/admin', function(req, res) {
+		var companyModel = mongoose.model('Company', companySchema),
+			opportunities = req.body.opportunities;
+		companyModel.update({ "name" : req.body.company },
+		{
+			$push : { 'opportunities' : [{	"position": req.body.position, 
+																			"status": req.body.status, 
+																			"requirements": req.body.requirements, 
+																			"timeestimate": req.body.timeestimate, 
+																			"price": req.body.price
+																	}]
+							}
+		});
+	})
 	.get('/sign-up', function(req, res) {
 		res.render('sign-up', {layout: false});
 	})
