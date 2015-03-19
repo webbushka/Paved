@@ -13,35 +13,33 @@ router
 	})
 	.post('/', emails.create);
 	*/
-	.get('/', function(req, res) {
+	.get('/', function (req, res) {
 		res.render('index', { stylesheet: 'index' });
 	})
-	.get('/opportunities', companies.find)
-	.get('/focused', function(req, res) {
-		res.render('focused', { stylesheet: 'focused' });
-	})
-	.get('/payment-form', function(req, res) {
-		res.render('payment-form', { stylesheet: 'payment-form' });
-	})
-	.get('/admin', isLoggedIn, function(req, res) {
-		res.render('admin', { stylesheet: 'admin' });
-	})
-	.post('/admin', companies.create)
-	.put('/admin', function(req, res) {
-		var companyModel = mongoose.model('Company', companySchema),
-			opportunities = req.body.opportunities;
-		companyModel.update({ "name" : req.body.company },
-		{
-			$push : { 'opportunities' : [{	"position": req.body.position, 
-																			"status": req.body.status, 
-																			"requirements": req.body.requirements, 
-																			"timeestimate": req.body.timeestimate, 
-																			"price": req.body.price
-																	}]
-							}
+	.get('/opportunities', function (req, res) {
+		companies.find(req, function (err, opps) {
+			// if (req.get('content-type') === 'application/json') {
+			// 	return res.json(opps);
+			// }
+			if(err) return console.log(err);
+			res.render('opportunities', {stylesheet: 'opportunities', companies: opps})
 		});
 	})
-	.get('/sign-up', function(req, res) {
+	.get('/focused', function (req, res) {
+		res.render('focused', { stylesheet: 'focused' });
+	})
+	.get('/payment-form', function (req, res) {
+		res.render('payment-form', { stylesheet: 'payment-form' });
+	})
+	.get('/admin', isLoggedIn, function (req, res) {
+		companies.find(req, function (err, opps) {
+			if(err) return console.log(err);
+			res.render('admin', { stylesheet: 'admin', companies: opps });
+		});
+	})
+	.post('/admin', companies.create)
+	.put('/admin', companies.update)
+	.get('/sign-up', function (req, res) {
 		res.render('sign-up', {layout: false});
 	})
 	// process the signup form
@@ -50,7 +48,7 @@ router
       failureRedirect : '/sign-up', // redirect back to the signup page if there is an error
       failureFlash : true // allow flash messages
   }))
-  .get('/log-in', function(req, res) {
+  .get('/log-in', function (req, res) {
 		res.render('log-in', {layout: false});
 	})
   .post('/log-in', passport.authenticate('local-login', {
@@ -75,7 +73,7 @@ function isLoggedIn(req, res, next) {
 var requiresAdmin = function() {
   return [
     isLoggedIn('/admin'),
-    function(req, res, next) {
+    function (req, res, next) {
       if (req.user && req.user.isAdmin === true)
         next();
       else

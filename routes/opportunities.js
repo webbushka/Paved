@@ -6,39 +6,59 @@ var companySchema = mongoose.Schema({
 		name					: String,
 		opportunities	: [
 			{
-				position			: String,
-				status				: String,
-  			requirements  : String,
-  			timeestimate	: String,
-  			price					: Number 
+				position			: {type: String, required: true},
+				status				: {type: String, required: true},
+  			requirements  : {type: String, required: true},
+  			timeestimate	: {type: String, required: true},
+  			price					: {type: Number, required: true} 
 			}
 		]
 });
 
 var Company = mongoose.model('Company', companySchema);
 
+var getOpportunity = function(req) {
+	var opp = {
+		position: req.body.position, 
+		status: req.body.status, 
+		requirements: req.body.requirements, 
+		timeestimate: req.body.timeestimate, 
+		price: req.body.price
+	};
+	console.log('opp', opp);
+	return opp;
+};
+
 exports.create = function(req, res){
-	console.log(req.body);
-  var company = new Company({
-  	name					: req.body.name,
-  	position			: req.body.position,
-		status		 		: req.body.status,
-		requirements  : req.body.requirements,
-		timeestimate	: req.body.timeestimate,
-		price					: req.body.price
-  });
-  	console.log(company);
-  	company.save(function (err, item) {
-    	if (err) return console.error(err);
-    	res.render('opportunities', {stylesheet: 'opportunities'});
+	var company = new Company({
+		name: req.body.name,
+		opportunities: [getOpportunity(req)]
+	});
+	console.log(company);
+	company.save(function (err, item) {
+  	if (err) return console.error(err);
+  	res.render('opportunities', {stylesheet: 'opportunities'});
   });
 };
 
-exports.find = function(req, res) {
-	return Company.find(function (err, opps) {
-		console.log(opps);
-		console.log("made it");
-		if (err) return console.log(err);
-			res.render('opportunities', { stylesheet: 'opportunities', companies: opps });
+exports.update = function(req, res) {
+	Company.findById(req.body.company, function(err, company) {
+		if(err) return console.log(err);
+		company.opportunities.push(getOpportunity(req));
+		company.save(function(err) {
+			if(err) return console.log(err);
+			res.json(company);
+		})
+	});
+};
+
+exports.find = function(req, done) {
+	Company.find(function (err, opps) {
+		if(typeof done === 'function') {
+			done(err, opps);
+		}
+		else {
+			throw('Expects a function as a second argument');
+		}
 	});
 };

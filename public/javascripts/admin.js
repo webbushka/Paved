@@ -3,6 +3,7 @@ $(document).ready(function() {
   $('select').change(function(e){
     if($(this).val() === 'add') {
       $('.app-root').addClass('new-company');
+      $('input').prop('required', true);
     }
     else {
       $('.app-root').removeClass('new-company');
@@ -20,17 +21,12 @@ $(document).ready(function() {
     }
     else {
       type = 'PUT';
-      company = $('select').val();
       url += '/' + company;
     }
-    
-    var data = $.serializeJSON($(this));
-    
-    data.company = company;
-    
+        
     $.ajax(url, {
       type: type,
-      data: data
+      data: $(this).serialize()
     })
   });
 });

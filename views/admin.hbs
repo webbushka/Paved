@@ -1,50 +1,49 @@
+<form>
 <div class="app-root">
-  <select name="" id="">
+  <select name="company" id="">
     <option>-- Select One --</option>
     <option value="add"> -- Add a company --</option>
-    <option value="c">Company XYZ</option>
-    <option value="a">Adobe</option>
-    <option value="n">Noodle</option>
-    <option value="t">Thinkful</option>
-    <option value="p">Paved</option>  
+    {{#each companies}}
+    <option value="{{_id}}">{{name}}</option> 
+    {{/each}}
   </select>
-  <form>
   <div class="hideIfNotNew">
     <label for="">
       Company Name:
-      <input type="text" />
+      <input type="text" name="name" />
     </label>
   </div>
   <div>
     <label for="">
       Position:
-      <input type="text" name="position" />
+      <input type="text" name="position" required/>
     </label>
   </div>
   <div>
     <label for="">
       Status:
-      <input type="text" name="status" />
+      <input type="text" name="status" required/>
     </label>
   </div>
   <div>
     <label for="">
       Requirements:
-      <input type="text" name="requirements" />
+      <input type="text" name="requirements" required/>
     </label>
   </div>
   <div>
     <label for="">
       Time Estimate:
-      <input type="text" name="timeestimate" />
+      <input type="text" name="timeestimate" required/>
     </label>
   </div>
   <div>
     <label for="">
       Price:
-      <input type="text" name="price" />
+      <input type="number" name="price" required/>
     </label>
   </div>
+  <button>Submit</button>
 </div>
 </form>
 

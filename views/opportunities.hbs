@@ -30,10 +30,11 @@ No HR departments to block your path, no silly job descriptions and requirements
 		</tbody>
 	</table>
 </div>
-{{#each companies}}
+{{#companies}}
 <div class="company-container">
 	<h3>{{name}}
 	</h3>
+	{{#opportunities}}
 	<table class="opportunities-table">
 		<tbody>
 			<tr> 
@@ -42,18 +43,11 @@ No HR departments to block your path, no silly job descriptions and requirements
 				</td>
 				<td class="opportunities timeframe">{{status}}</td>
 			</tr>
-			<tr>
-				<td class="opportunities name">{{position}}</td>
-				<td class="opportunities timeframe">{{status}}</td>
-			</tr>
-			<tr>
-				<td class="opportunities name">{{position}}</td>
-				<td class="opportunities timeframe">{{status}}</td>
-			</tr>
 		</tbody>
 	</table>
+	{{/opportunities}}
 </div>
-{{/each}}
+{{/companies}}
 <div class="company-container">
 	<h3>THINKFUL
 	</h3>
