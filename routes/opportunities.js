@@ -10,26 +10,39 @@ var companySchema = mongoose.Schema({
 				status				: {type: String, required: true},
   			requirements  : {type: String, required: true},
   			timeestimate	: {type: String, required: true},
-  			price					: {type: Number, required: true} 
+  			price					: {type: Number, required: true},
+  			description		: {type: String, required: true}  
 			}
 		]
 });
 
 var Company = mongoose.model('Company', companySchema);
 
-var getOpportunity = function(req) {
+var getOpportunity = function (req) {
 	var opp = {
 		position: req.body.position, 
 		status: req.body.status, 
 		requirements: req.body.requirements, 
 		timeestimate: req.body.timeestimate, 
-		price: req.body.price
+		price: req.body.price,
+		description: req.body.description
 	};
 	console.log('opp', opp);
 	return opp;
 };
 
-exports.create = function(req, res){
+var getEvaluation = function (req) {
+	var eval = {
+		name: req.body.name,
+		position: req.body.position,
+		timeestimate: req.body.timeestimate,
+		description: req.body.description
+	};
+	return eval;
+	console.log(eval);
+};
+
+exports.create = function (req, res) {
 	var company = new Company({
 		name: req.body.name,
 		opportunities: [getOpportunity(req)]
@@ -41,7 +54,7 @@ exports.create = function(req, res){
   });
 };
 
-exports.update = function(req, res) {
+exports.update = function (req, res) {
 	Company.findById(req.body.company, function(err, company) {
 		if(err) return console.log(err);
 		company.opportunities.push(getOpportunity(req));
@@ -52,7 +65,7 @@ exports.update = function(req, res) {
 	});
 };
 
-exports.find = function(req, done) {
+exports.find = function (req, done) {
 	Company.find(function (err, opps) {
 		if(typeof done === 'function') {
 			done(err, opps);
@@ -61,4 +74,10 @@ exports.find = function(req, done) {
 			throw('Expects a function as a second argument');
 		}
 	});
+};
+
+exports.show = function (req, res) {
+	var eval = Company.findById(Company, {id: req.body.id});
+	console.log(eval);
+	res.render('evaluation', {stylesheet: 'evaluation', Company: eval});
 };

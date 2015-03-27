@@ -28,6 +28,7 @@ router
 	.get('/focused', function (req, res) {
 		res.render('focused', { stylesheet: 'focused' });
 	})
+	.get('/evaluation/:id', companies.show)
 	.get('/payment-form', function (req, res) {
 		res.render('payment-form', { stylesheet: 'payment-form' });
 	})
