@@ -22,13 +22,18 @@ router
 			// 	return res.json(opps);
 			// }
 			if(err) return console.log(err);
+			opps.forEach(function(company) {
+				company.opportunities.forEach(function(opp, i, list) {
+					list[i].companyId = company._id;
+				});
+			});
 			res.render('opportunities', {stylesheet: 'opportunities', companies: opps})
 		});
 	})
 	.get('/focused', function (req, res) {
 		res.render('focused', { stylesheet: 'focused' });
 	})
-	.get('/evaluation/:id', companies.show)
+	.get('/opportunities/:companyId/evaluation/:id', companies.show)
 	.get('/payment-form', function (req, res) {
 		res.render('payment-form', { stylesheet: 'payment-form' });
 	})
