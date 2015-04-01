@@ -33,7 +33,7 @@ router
 	.get('/focused', function (req, res) {
 		res.render('focused', { stylesheet: 'focused' });
 	})
-	.get('/opportunities/:companyId/evaluation/:id', companies.show)
+	.get('/opportunities/:companyId/evaluation/:id', isLoggedIn, companies.show)
 	.get('/payment-form', function (req, res) {
 		res.render('payment-form', { stylesheet: 'payment-form' });
 	})
@@ -57,11 +57,32 @@ router
   .get('/log-in', function (req, res) {
 		res.render('log-in', {layout: false});
 	})
-  .post('/log-in', passport.authenticate('local-login', {
-      successRedirect : '/', // redirect to the secure profile section
+  .post('/log-in', function(req, res, next) { 
+  	passport.authenticate('local-login', function(err, user, info) {
+      //This is the default destination upon successful login
+      var redirectUrl = '/';
+
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/'); }
+
+      //If we have previously stored a redirectUrl, use that,
+      // otherwise, use the default
+      if (req.session.redirectUrl) {
+      	redirectUrl = req.session.redirectUrl;
+      	req.session.redirectUrl = null;
+      }
+
+      req.logIn(user, function(err){
+      	if (err) { return next(err); }
+      });
+      res.redirect(redirectUrl);
+  	})(req, res, next);
+  });
+
+      /*successRedirect : '/', // redirect to the secure profile section
       failureRedirect : '/log-in', // redirect back to the signup page if there is an error
-      failureFlash : true // allow flash messages
-  }));
+      failureFlash : true // allow flash messages*/
+  /*}));*/
 
   console.log('here');
 
@@ -71,6 +92,8 @@ function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
         return next();
+
+    req.session.redirectUrl = req.url;
 
     // if they aren't redirect them to the home page
     res.redirect('/log-in');
