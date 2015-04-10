@@ -3,6 +3,8 @@ var express = require('express');
 var passport = require('passport');
 var companies = require('./opportunities');
 var router = express.Router();
+var user = require('./users');
+var stripe = require('stripe');
 
 /* GET home page. */
 
@@ -49,42 +51,102 @@ router
 		res.render('sign-up', {layout: false});
 	})
 	// process the signup form
-  .post('/sign-up', passport.authenticate('local-signup', {
-      successRedirect : '/', // redirect to the secure profile section
+  .post('/sign-up', function(req, res, next) { 
+	  passport.authenticate('local-signup', function(err, user, info) {
+	    //This is the default destination upon successful login
+	    var redirectUrl = '/';
+
+	    if (err) { return next(err); }
+	    if (!user) { return res.redirect('/'); }
+
+	    //If we have previously stored a redirectUrl, use that,
+	    // otherwise, use the default
+	    if (req.session.redirectUrl) {
+	    	redirectUrl = req.session.redirectUrl;
+	    	req.session.redirectUrl = null;
+	    }
+
+	    req.logIn(user, function(err){
+	    	if (err) { return next(err); }
+	    });
+	    res.redirect(redirectUrl);
+		})(req, res, next);
+  })
+      /*successRedirect : '/', // redirect to the secure profile section
       failureRedirect : '/sign-up', // redirect back to the signup page if there is an error
       failureFlash : true // allow flash messages
-  }))
+  }))*/
   .get('/log-in', function (req, res) {
 		res.render('log-in', {layout: false});
 	})
-  .post('/log-in', function(req, res, next) { 
-  	passport.authenticate('local-login', function(err, user, info) {
-      //This is the default destination upon successful login
-      var redirectUrl = '/';
+  .post('/log-in', function(req, res, next) {
+	  passport.authenticate('local-login', function(err, user, info) {
+	    //This is the default destination upon successful login
+	    var redirectUrl = '/';
 
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/'); }
+	    if (err) { return next(err); }
+	    if (!user) { return res.redirect('/'); }
 
-      //If we have previously stored a redirectUrl, use that,
-      // otherwise, use the default
-      if (req.session.redirectUrl) {
-      	redirectUrl = req.session.redirectUrl;
-      	req.session.redirectUrl = null;
-      }
+	    //If we have previously stored a redirectUrl, use that,
+	    // otherwise, use the default
+	    if (req.session.redirectUrl) {
+	    	redirectUrl = req.session.redirectUrl;
+	    	req.session.redirectUrl = null;
+	    }
 
-      req.logIn(user, function(err){
-      	if (err) { return next(err); }
-      });
-      res.redirect(redirectUrl);
-  	})(req, res, next);
+	    req.logIn(user, function(err){
+	    	if (err) { return next(err); }
+	    });
+	    res.redirect(redirectUrl);
+		})(req, res, next);
   });
+
+var custRedir = function (err, user, info) {
+	//This is the default destination upon successful login
+  var redirectUrl = '/';
+
+  if (err) { return next(err); }
+  if (!user) { return res.redirect('/'); }
+
+  //If we have previously stored a redirectUrl, use that,
+  // otherwise, use the default
+  if (req.session.redirectUrl) {
+  	redirectUrl = req.session.redirectUrl;
+  	req.session.redirectUrl = null;
+  }
+
+  req.logIn(user, function(err){
+  	if (err) { return next(err); }
+  });
+  res.redirect(redirectUrl);
+};
+
+/*function customRedirect(strategy) {
+	passport.authenticate(strategy, function(err, user, info) {
+    //This is the default destination upon successful login
+    var redirectUrl = '/';
+
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/'); }
+
+    //If we have previously stored a redirectUrl, use that,
+    // otherwise, use the default
+    if (req.session.redirectUrl) {
+    	redirectUrl = req.session.redirectUrl;
+    	req.session.redirectUrl = null;
+    }
+
+    req.logIn(user, function(err){
+    	if (err) { return next(err); }
+    });
+    res.redirect(redirectUrl);
+	});
+};*/
 
       /*successRedirect : '/', // redirect to the secure profile section
       failureRedirect : '/log-in', // redirect back to the signup page if there is an error
       failureFlash : true // allow flash messages*/
   /*}));*/
-
-  console.log('here');
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {

@@ -8,56 +8,41 @@ No HR departments to block your path, no silly job descriptions and requirements
 </div>
 <hr>
 <div class="opportunities-container">
-<div class="company-container">
-	<h3>THINKFUL
-	</h3>
-	<table class="opportunities-table">
-		<tbody>
-			<tr> 
-				<td class="opportunities name">
-					<a href="/focused">Marketing</a>
-				</td>
-				<td class="opportunities timeframe">Open</td>
-			</tr>
-			<tr>
-				<td class="opportunities name">Business Development</td>
-				<td class="opportunities timeframe">3-6 months</td>
-			</tr>
-			<tr>
-				<td class="opportunities name">Community Manager</td>
-				<td class="opportunities timeframe">1-3 months</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-{{#companies}}
-<div class="company-container">
-	<h3>{{name}}
-	</h3>
-	{{companyId}}
-	{{#opportunities}}
-	<table class="opportunities-table">
-		<tbody>
-			<tr> 
-				<td class="opportunities name">
-					<a href="/opportunities/{{companyId}}/evaluation/{{id}}">{{position}}</a>
-				</td>
-				<td class="opportunities timeframe">{{status}}</td>
-			</tr>
-		</tbody>
-	</table>
-	{{/opportunities}}
-</div>
-{{/companies}}
-<div class="company-container">
-	<h3>THINKFUL
-	</h3>
-	<div class="opportunities-list">
-		<ul>
-			<li class="opportunities">Marketing</li>
-			<li class="opportunities">Business Development</li>
-			<li class="opportunities">Community Manager</li>
-		</ul>
+	{{#companies}}
+	<div class="company-container">
+		<h3>{{name}}
+		</h3>
+		{{companyId}}
+		{{#opportunities}}
+		<table class="opportunities-table">
+			<tbody>
+				<tr> 
+					<td class="opportunities name">{{position}}
+					</td>
+					<td class="opportunities timeframe">{{status}}</td>
+				</tr>
+			</tbody>
+			<tbody class="details" id="{{id}}">
+				<tr>
+					<td>Absolute minimum requirement: {{requirements}}</td>
+				</tr>
+				<tr>
+					<td>Estimated time to complete evaluation: {{timeestimate}}</td>
+				</tr>
+				<tr>
+					<td>Price: {{price}}</td>
+				</tr>
+				<tr>
+					<td><button><a href="/opportunities/{{companyId}}/evaluation/{{id}}">GET EVALUATION
+											</a>
+							</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		{{/opportunities}}
 	</div>
+	{{/companies}}
 </div>
-</div>
+
+<script src="/javascripts/opportunities.js"></script>
