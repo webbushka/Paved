@@ -1,7 +1,10 @@
 $(document).ready(function() {
 
-	$('.opportunities-table').click(function() {
-		$('.details').show('slow');
+	$('.wrapper').click(function() {
+		$(this).children('.details-container').slideToggle({duration: 400});
+		/*$('html, body').animate({
+      scrollTop: $('.details-container').offset().top + $('window').height()
+    }, 800);*/
 	});
 
 });

@@ -12,23 +12,23 @@
 }
 
 .form-body {
-	height: 12em;
+	height: 9em;
 	width: 24em;
 	text-align: center;
 	background-color: rgb(242,242,242);
 	margin-bottom: 15em;
 }
 
-.first-row {
-	display: inline-block;
-	margin-top: 1em;
+.payment-errors {
+	position: absolute;
+	display: block;
+	left: 0;
+	right: 0;
+	margin-top: .5em;
 }
 
-.second-row {
-	display: inline-block;
-}
-
-.third-row {
+.form-row {
+	margin-top: 2.5em;
 	display: inline-block;
 }
 

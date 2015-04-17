@@ -4,7 +4,7 @@ var passport = require('passport');
 var companies = require('./opportunities');
 var router = express.Router();
 var user = require('./users');
-var stripe = require('stripe');
+var stripe = require('stripe')("sk_test_r6CoQNy1HzO4cfqEDqS6D4I8");
 
 /* GET home page. */
 
@@ -29,15 +29,39 @@ router
 					list[i].companyId = company._id;
 				});
 			});
-			res.render('opportunities', {stylesheet: 'opportunities', companies: opps})
+			res.render('opportunities', {stylesheet: 'opportunities', companies: opps});
 		});
 	})
 	.get('/focused', function (req, res) {
 		res.render('focused', { stylesheet: 'focused' });
 	})
-	.get('/opportunities/:companyId/evaluation/:id', isLoggedIn, companies.show)
-	.get('/payment-form', function (req, res) {
+	.get('/opportunities/:companyId/evaluation/:id', isLoggedIn, function (req, res) {
 		res.render('payment-form', { stylesheet: 'payment-form' });
+	})
+	.post('/opportunities/:companyId/evaluation/:id', function (req, res, next) {	
+		//Obtain StripeToken
+		var stripeToken = req.body.stripeToken;
+
+		var charge = {
+    amount: 1000,
+    currency: 'USD',
+    source: stripeToken,
+    description: "Example charge"
+  	};
+
+  	console.log(stripeToken);
+
+		stripe.charges.create(charge, function(err, charge) {
+			console.log("made it!");
+		  if (err && err.type === 'StripeCardError') {
+		    // The card has been declined
+		    console.log("Fail!");
+		    return next (err);
+		  }
+		  else {
+		  	console.log("boom");
+		  }
+		});
 	})
 	.get('/admin', isLoggedIn, function (req, res) {
 		companies.find(req, function (err, opps) {

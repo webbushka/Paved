@@ -14,6 +14,7 @@ No HR departments to block your path, no silly job descriptions and requirements
 		</h3>
 		{{companyId}}
 		{{#opportunities}}
+		<div class='wrapper'>
 		<table class="opportunities-table">
 			<tbody>
 				<tr> 
@@ -22,24 +23,31 @@ No HR departments to block your path, no silly job descriptions and requirements
 					<td class="opportunities timeframe">{{status}}</td>
 				</tr>
 			</tbody>
+		</table>
+		<div class="details-container">
+		<table>
 			<tbody class="details" id="{{id}}">
 				<tr>
-					<td>Absolute minimum requirement: {{requirements}}</td>
+					<td class="view-details">Absolute minimum requirement: {{requirements}}</td>
 				</tr>
 				<tr>
-					<td>Estimated time to complete evaluation: {{timeestimate}}</td>
+					<td class="view-details">Estimated time to complete evaluation: {{timeestimate}}</td>
 				</tr>
 				<tr>
-					<td>Price: {{price}}</td>
+					<td class="view-details">Price: {{price}}</td>
 				</tr>
 				<tr>
-					<td><button><a href="/opportunities/{{companyId}}/evaluation/{{id}}">GET EVALUATION
-											</a>
-							</button>
+					<td class="view-details">
+						<button>
+							<a href="/opportunities/{{companyId}}/evaluation/{{id}}">GET EVALUATION
+							</a>
+						</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		</div>
+		</div>
 		{{/opportunities}}
 	</div>
 	{{/companies}}

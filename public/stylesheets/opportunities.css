@@ -54,6 +54,19 @@ hr {
 	box-sizing: border-box;
 }
 
-.details {
+.details-container {
 	display: none;
+} 
+
+.view-details {
+	padding-left: 1.4em;
+	padding-bottom: .5em;
+}
+
+.view-details button {
+	background-color: rgb(72,145,115);
+	color: white;
+	border: 0;
+	border-radius: .2em;
+	font-family: 'Cantarell', sans-serif;
 }
