@@ -52,14 +52,12 @@ router
   	console.log(stripeToken);
 
 		stripe.charges.create(charge, function(err, charge) {
-			console.log("made it!");
 		  if (err && err.type === 'StripeCardError') {
 		    // The card has been declined
-		    console.log("Fail!");
 		    return next (err);
 		  }
 		  else {
-		  	console.log("boom");
+		  	companies.show(req, res);
 		  }
 		});
 	})
