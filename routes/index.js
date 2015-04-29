@@ -1,10 +1,12 @@
 //var emails = require('../emails');
+var fs = require('fs');
 var express = require('express');
 var passport = require('passport');
-var companies = require('./opportunities');
+var companies = require('../models/opportunities');
 var router = express.Router();
-var user = require('./users');
+var user = require('../models/users');
 var stripe = require('stripe')("sk_test_r6CoQNy1HzO4cfqEDqS6D4I8");
+var AWS = require('aws-sdk');
 
 /* GET home page. */
 
@@ -32,9 +34,6 @@ router
 			res.render('opportunities', {stylesheet: 'opportunities', companies: opps});
 		});
 	})
-	.get('/focused', function (req, res) {
-		res.render('focused', { stylesheet: 'focused' });
-	})
 	.get('/opportunities/:companyId/evaluation/:id', isLoggedIn, function (req, res) {
 		res.render('payment-form', { stylesheet: 'payment-form' });
 	})
@@ -60,6 +59,15 @@ router
 		  	companies.show(req, res);
 		  }
 		});
+	})
+	.get('/opportunities/:companyId/evaluation/:id/upload', function (req, res) {
+		var s3 = new AWS.S3();
+		var params = {Bucket: 'paved-test', Key: 'RD.pdf'};
+		s3.getObject(params, {stream: true}, function(err, data) {
+			res.attachment();
+			fs.createReadStream('RD.pdf').pipe(res);
+		});
+		res.render('index', { stylesheet: 'index' });
 	})
 	.get('/admin', isLoggedIn, function (req, res) {
 		companies.find(req, function (err, opps) {

@@ -9,6 +9,9 @@ var flash = require('connect-flash');
 var configDB = require('./config/database.js');
 var session = require('express-session');
 var mongoose = require('mongoose');
+var AWS = require('aws-sdk');
+
+AWS.config.update = ({region: 'us-west-2'});
 
 //landing-page mongoose reqs
 //var mongo = require('mongodb');
