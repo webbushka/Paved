@@ -7,6 +7,7 @@ var router = express.Router();
 var user = require('../models/users');
 var stripe = require('stripe')("sk_test_r6CoQNy1HzO4cfqEDqS6D4I8");
 var AWS = require('aws-sdk');
+var s3 = new AWS.S3();
 
 /* GET home page. */
 
@@ -61,11 +62,11 @@ router
 		});
 	})
 	.get('/opportunities/:companyId/evaluation/:id/upload', function (req, res) {
-		var s3 = new AWS.S3();
 		var params = {Bucket: 'paved-test', Key: 'RD.pdf'};
-		s3.getObject(params, {stream: true}, function(err, data) {
-			res.attachment();
-			fs.createReadStream('RD.pdf').pipe(res);
+		s3.getObject(params, function (err, data) {
+			//res.attachment();
+			if (err) return console.log(err); 
+			fs.createReadStream(params).pipe(res);
 		});
 		res.render('index', { stylesheet: 'index' });
 	})
