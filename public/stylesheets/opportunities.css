@@ -63,10 +63,18 @@ hr {
 	padding-bottom: .5em;
 }
 
-.view-details button {
+.user-actions {
 	background-color: rgb(72,145,115);
 	color: white;
 	border: 0;
 	border-radius: .2em;
 	font-family: 'Cantarell', sans-serif;
 }
+
+.user-actions input[type="file"] {
+	position: fixed;
+	top: -1000px;
+}
+
+
+

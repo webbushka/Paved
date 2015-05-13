@@ -25,6 +25,10 @@ var oppSchema = mongoose.Schema({
  description: {
  type: String,
  required: true
+ },
+ file: {
+ type: String,
+ required: false
  }
 });
 
@@ -43,7 +47,8 @@ var getOpportunity = function (req) {
 		requirements: req.body.requirements, 
 		timeestimate: req.body.timeestimate, 
 		price: req.body.price,
-		description: req.body.description
+		description: req.body.description,
+		file: req.body.file
 	};
 	return opp;
 };
@@ -83,9 +88,46 @@ exports.find = function (req, done) {
 };
 
 exports.show = function (req, res) {
-	Company.findById(req.params.companyId, function(err, company) {
+	var query = { 'file': '' };
+	Company.findById(req.params.companyId, function (err, company) {
 		if (err) throw err;
-		var evaluation = company.opportunities.id(req.params.id);
+		evaluation = company.opportunities.id(req.params.id);
+		console.log(evaluation);
 		res.render('evaluation', {stylesheet: 'evaluation', company: company, opportunity: evaluation});
 	});
+	Company.find(evaluation, query, function (err, filename) {
+		if (err) throw err;
+		console.log(filename);
+	});
 };
+
+/*exports.findEvalFile = function (req, res) {
+		var query = { 'opportunities.file': '' };
+		var filename = query.findOne(Company, function (err, doc) {
+			if (err) throw err;
+			done(doc);
+			console.log(filename);
+	});
+};
+*/
+
+exports.findEvalFile = function (req, res) {
+		var query = { 'file': '' };
+		Company.findById(req.params.companyId, query, function (err, company) {
+			if (err) throw err;
+			var evaluation = company.opportunities.id(req.params.id);
+			console.log(evaluation);
+			/*var filename = evaluation.find(query);
+			console.log(filename);*/
+		});
+};
+
+/*exports.findEvalFile = function (req, res) {
+	Company.findById(req.params.companyId, function (err, company) {
+		if (err) throw err;
+		var query = { 'opportunities.file': '' };
+		var filename = Company.find(query);
+	});
+	done(err, filename);
+	console.log(filename);
+};*/

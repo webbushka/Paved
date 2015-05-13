@@ -8,6 +8,8 @@ var user = require('../models/users');
 var stripe = require('stripe')("sk_test_r6CoQNy1HzO4cfqEDqS6D4I8");
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
+var path = require('path');
+var Company = require('../models/opportunities');
 
 /* GET home page. */
 
@@ -62,13 +64,21 @@ router
 		});
 	})
 	.get('/opportunities/:companyId/evaluation/:id/upload', function (req, res) {
-		var params = {Bucket: 'paved-test', Key: 'RD.pdf'};
-		s3.getObject(params, function (err, data) {
-			//res.attachment();
-			if (err) return console.log(err); 
-			fs.createReadStream(params).pipe(res);
-		});
-		res.render('index', { stylesheet: 'index' });
+		companies.findEvalFile(req, res);
+		console.log(findEvalFile);		
+		/*var filename = 'RD.pdf';*/
+		var params = {Bucket: 'paved-test', Key: findEvalFile};
+		var file = fs.createWriteStream(path.join(__dirname, findEvalFile));
+		s3.getObject(params)
+		.on('httpData', function(chunk) { file.write(chunk); })
+		.on('httpDone', function(data) {
+			file.end(function (err, result) {
+				res.setHeader('content-type', data.httpResponse.headers['content-type']);
+				fs.createReadStream(file.path).pipe(res);
+					fs.unlinkSync(file.path);
+			});
+		})
+		.send();
 	})
 	.get('/admin', isLoggedIn, function (req, res) {
 		companies.find(req, function (err, opps) {
