@@ -1,10 +1,11 @@
-<form>
+<form action="/admin" method="post" entype="multipart/form-data">
 <div class="app-root">
+  <input type="hidden" name="method" value="post">
   <select name="company" id="">
     <option>-- Select One --</option>
     <option value="add"> -- Add a company --</option>
     {{#each companies}}
-    <option value="{{_id}}">{{name}}</option> 
+    <option value="{{_id}}">{{name}}</option>
     {{/each}}
   </select>
   <div class="hideIfNotNew">
@@ -52,7 +53,6 @@
   <div>
     <label for="">
       File:
-    <input type="text" name="file">
     <input type="file" name="file_upload" id="file_upload">
   </label>
   </div>

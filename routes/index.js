@@ -39,7 +39,7 @@ router
 	.get('/opportunities/:companyId/evaluation/:id', isLoggedIn, function (req, res) {
 		res.render('payment-form', { stylesheet: 'payment-form' });
 	})
-	.post('/opportunities/:companyId/evaluation/:id', function (req, res, next) {	
+	.post('/opportunities/:companyId/evaluation/:id', function (req, res, next) {
 		//Obtain StripeToken
 		var stripeToken = req.body.stripeToken;
 
@@ -66,7 +66,7 @@ router
 		res.render('index', { stylesheet: 'index' });
 	})
 	.get('/opportunities/:companyId/evaluation/:id/upload', function (req, res) {
-		companies.findEvalFile(req, res, function(filename) {		
+		companies.findEvalFile(req, res, function(filename) {
 			var params = {Bucket: 'paved-test', Key: filename};
 			var file = fs.createWriteStream(path.join(__dirname, filename));
 			s3.getObject(params)
@@ -87,25 +87,15 @@ router
 			res.render('admin', { stylesheet: 'admin', companies: opps });
 		});
 	})
-	.post('/admin', companies.create, function (req, res) {
-		console.log(res);
-	})
-	.put('/admin', function (req, res) {
-		companies.update;
-		console.log("made it");
-		/* upload to amazon here */
-		var filename = req.params.file_upload;
-		fs.createReadStream(filename).pipe(res);
-		var params = {Bucket: 'paved-test', Key: filename};
-		s3.upload(params).
-			on('httpUploadProgress', function(evt) {console.log(evt); }).
-			send(function(err, data) { console.log(err, data) });
+	.post('/admin', function(req, res){
+		if(req.body.method === 'post') companies.create(req, res);
+		else companies.update(req, res);
 	})
 	.get('/sign-up', function (req, res) {
 		res.render('sign-up', {layout: false});
 	})
 	// process the signup form
-  .post('/sign-up', function(req, res, next) { 
+  .post('/sign-up', function(req, res, next) {
 	  passport.authenticate('local-signup', function(err, user, info) {
 	    //This is the default destination upon successful login
 	    var redirectUrl = '/';
@@ -174,7 +164,7 @@ var custRedir = function (err, user, info) {
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
-    // if user is authenticated in the session, carry on 
+    // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
 
