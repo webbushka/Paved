@@ -71,10 +71,10 @@ hr {
 	font-family: 'Cantarell', sans-serif;
 }
 
-.user-actions input[type="file"] {
-	position: fixed;
-	top: -1000px;
+#user_upload {
+	display: inline-block;
 }
 
-
-
+.hidden_upload {
+	display: none;
+}

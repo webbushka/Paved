@@ -9,7 +9,6 @@ var stripe = require('stripe')("sk_test_r6CoQNy1HzO4cfqEDqS6D4I8");
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3();
 var path = require('path');
-var Company = require('../models/opportunities');
 
 /* GET home page. */
 
@@ -64,21 +63,23 @@ router
 		});
 	})
 	.get('/opportunities/:companyId/evaluation/:id/upload', function (req, res) {
-		companies.findEvalFile(req, res);
-		console.log(findEvalFile);		
-		/*var filename = 'RD.pdf';*/
-		var params = {Bucket: 'paved-test', Key: findEvalFile};
-		var file = fs.createWriteStream(path.join(__dirname, findEvalFile));
-		s3.getObject(params)
-		.on('httpData', function(chunk) { file.write(chunk); })
-		.on('httpDone', function(data) {
-			file.end(function (err, result) {
-				res.setHeader('content-type', data.httpResponse.headers['content-type']);
-				fs.createReadStream(file.path).pipe(res);
-					fs.unlinkSync(file.path);
-			});
-		})
-		.send();
+		res.render('index', { stylesheet: 'index' });
+	})
+	.get('/opportunities/:companyId/evaluation/:id/upload', function (req, res) {
+		companies.findEvalFile(req, res, function(filename) {		
+			var params = {Bucket: 'paved-test', Key: filename};
+			var file = fs.createWriteStream(path.join(__dirname, filename));
+			s3.getObject(params)
+			.on('httpData', function(chunk) { file.write(chunk); })
+			.on('httpDone', function(data) {
+				file.end(function (err, result) {
+					res.setHeader('content-type', data.httpResponse.headers['content-type']);
+					fs.createReadStream(file.path).pipe(res);
+						fs.unlinkSync(file.path);
+				});
+			})
+			.send();
+		});
 	})
 	.get('/admin', isLoggedIn, function (req, res) {
 		companies.find(req, function (err, opps) {
@@ -86,8 +87,20 @@ router
 			res.render('admin', { stylesheet: 'admin', companies: opps });
 		});
 	})
-	.post('/admin', companies.create)
-	.put('/admin', companies.update)
+	.post('/admin', companies.create, function (req, res) {
+		console.log(res);
+	})
+	.put('/admin', function (req, res) {
+		companies.update;
+		console.log("made it");
+		/* upload to amazon here */
+		var filename = req.params.file_upload;
+		fs.createReadStream(filename).pipe(res);
+		var params = {Bucket: 'paved-test', Key: filename};
+		s3.upload(params).
+			on('httpUploadProgress', function(evt) {console.log(evt); }).
+			send(function(err, data) { console.log(err, data) });
+	})
 	.get('/sign-up', function (req, res) {
 		res.render('sign-up', {layout: false});
 	})
@@ -113,10 +126,6 @@ router
 	    res.redirect(redirectUrl);
 		})(req, res, next);
   })
-      /*successRedirect : '/', // redirect to the secure profile section
-      failureRedirect : '/sign-up', // redirect back to the signup page if there is an error
-      failureFlash : true // allow flash messages
-  }))*/
   .get('/log-in', function (req, res) {
 		res.render('log-in', {layout: false});
 	})
@@ -161,33 +170,6 @@ var custRedir = function (err, user, info) {
   });
   res.redirect(redirectUrl);
 };
-
-/*function customRedirect(strategy) {
-	passport.authenticate(strategy, function(err, user, info) {
-    //This is the default destination upon successful login
-    var redirectUrl = '/';
-
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/'); }
-
-    //If we have previously stored a redirectUrl, use that,
-    // otherwise, use the default
-    if (req.session.redirectUrl) {
-    	redirectUrl = req.session.redirectUrl;
-    	req.session.redirectUrl = null;
-    }
-
-    req.logIn(user, function(err){
-    	if (err) { return next(err); }
-    });
-    res.redirect(redirectUrl);
-	});
-};*/
-
-      /*successRedirect : '/', // redirect to the secure profile section
-      failureRedirect : '/log-in', // redirect back to the signup page if there is an error
-      failureFlash : true // allow flash messages*/
-  /*}));*/
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {

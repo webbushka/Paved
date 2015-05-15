@@ -7,4 +7,9 @@ $(document).ready(function() {
     }, 800);*/
 	});
 
+	$("#user_upload").click = function() {
+		console.log("works");
+    document.getElementById('hide_upload').click();
+	};
+
 });

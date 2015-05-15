@@ -64,16 +64,17 @@ exports.create = function (req, res) {
   });
 };
 
-exports.update = function (req, res) {
+exports.update = function (req, res, next) {
 	Company.findById(req.body.company, function(err, company) {
 		if(err) return console.log(err);
 		company.opportunities.push(getOpportunity(req));
 		console.log(getOpportunity(req));
 		company.save(function(err) {
 			if(err) return console.log(err);
-			res.json(company);
+			//res.json(company);
 		});
 	});
+	return next();
 };
 
 exports.find = function (req, done) {
@@ -111,14 +112,16 @@ exports.show = function (req, res) {
 };
 */
 
-exports.findEvalFile = function (req, res) {
-		var query = { 'file': '' };
-		Company.findById(req.params.companyId, query, function (err, company) {
+exports.findEvalFile = function (req, res, done) {
+	var companyId = req.params.companyId;
+	var evalId = req.params.id;
+	console.log(evalId);
+		Company.findById(companyId, function (err, company) {
 			if (err) throw err;
-			var evaluation = company.opportunities.id(req.params.id);
-			console.log(evaluation);
-			/*var filename = evaluation.find(query);
-			console.log(filename);*/
+			var opportunity = company.opportunities.id(evalId);
+			var filename = opportunity.file;
+			console.log(filename);
+			done(filename);
 		});
 };
 

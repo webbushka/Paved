@@ -1,7 +1,7 @@
 <div class="banner">
 <h2>OPPORTUNITIES
 </h2>
-<p>Each position will be listed along with the employer’s estimate of when it will open, any absolute minimum requirements they may have, and the amount of time they suggest you spend on the evaluation. We will deliver your completed evaluation straight to the person that matters.<br><br>
+<p class="foo">Each position will be listed along with the employer’s estimate of when it will open, any absolute minimum requirements they may have, and the amount of time they suggest you spend on the evaluation. We will deliver your completed evaluation straight to the person that matters.<br><br>
 
 No HR departments to block your path, no silly job descriptions and requirements. Put in the effort and you will be recognized.
 </p>
@@ -18,13 +18,13 @@ No HR departments to block your path, no silly job descriptions and requirements
 		<table class="opportunities-table">
 			<tbody>
 				<tr> 
-					<td class="opportunities name">{{position}}
+					<td id="wrapper" class="opportunities name">{{position}}
 					</td>
 					<td class="opportunities timeframe">{{status}}</td>
 				</tr>
 			</tbody>
 		</table>
-		<div class="details-container">
+		<div class="details-container" id="reveal_details">
 		<table>
 			<tbody class="details" id="{{id}}">
 				<tr>
@@ -42,12 +42,13 @@ No HR departments to block your path, no silly job descriptions and requirements
 							<a href="/opportunities/{{companyId}}/evaluation/{{id}}">GET EVALUATION
 							</a>
 						</button>
-						<!-- <label class="user-actions"> -->
-						<button class="user-actions">
+						<label>
+						<button id="user_upload" class="user-actions">
 							<a href="/opportunities/{{companyId}}/evaluation/{{id}}/upload">UPLOAD EVALUATION
 							</a>
-						<!-- </label> -->
-							</button>
+						</button>
+						</label>
+						<input type="file" id="hide_upload" class="hidden_upload">
 					</td>
 				</tr>
 			</tbody>
